@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certifications Portfolio</title>
+<style>
+body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+.container { max-width: 700px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+input, select { padding:10px; width: calc(100% - 22px); margin:5px 0; }
+button { padding:10px; margin-top:5px; cursor:pointer; }
+ul { list-style:none; padding:0; }
+li { padding:8px; background:#eee; margin:5px 0; border-radius:5px; display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Manage Certifications</h2>
+    <input type="text" id="certTitle" placeholder="Certification Title">
+    <input type="text" id="certInstitution" placeholder="Institution">
+    <input type="date" id="certDate" placeholder="Date Obtained">
+    <button onclick="addCertification()">Add Certification</button>
+
+    <h3>Certifications List</h3>
+    <ul id="certsList"></ul>
+</div>
+
+<script>
+const apiUrl = "http://localhost/portfolio-api/api/certifications_api.php";
+
+function fetchCertifications(){
+    fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+        const list = document.getElementById('certsList');
+        list.innerHTML = '';
+        data.results.forEach(cert => {
+            const li = document.createElement('li');
+            li.innerHTML = `${cert.title} (${cert.institution}, ${cert.date_obtained}) 
+                            <button onclick="deleteCertification(${cert.id})">Delete</button>`;
+            list.appendChild(li);
+        });
+    });
+}
+
+function addCertification(){
+    const title = document.getElementById('certTitle').value;
+    const institution = document.getElementById('certInstitution').value;
+    const date_obtained = document.getElementById('certDate').value;
+
+    fetch(apiUrl, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({title, institution, date_obtained})
+    }).then(()=> {
+        document.getElementById('certTitle').value='';
+        document.getElementById('certInstitution').value='';
+        document.getElementById('certDate').value='';
+        fetchCertifications();
+    });
+}
+
+function deleteCertification(id){
+    fetch(apiUrl+'?id='+id, {method:'DELETE'})
+    .then(()=> fetchCertifications());
+}
+
+// Load certifications initially
+fetchCertifications();
+</script>
+</body>
+</html>
