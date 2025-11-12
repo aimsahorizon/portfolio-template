@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Edit Profile</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.php">← Back to Admin Dashboard</a>
+  </nav>
+
+  <section class="container">
+    <h2>Edit Profile</h2>
+    <form id="profileForm">
+      <label>Full Name:</label>
+      <input type="text" id="full_name" required>
+
+      <label>Title/Position:</label>
+      <input type="text" id="title" required>
+
+      <label>Email:</label>
+      <input type="email" id="email" required>
+
+      <label>Phone:</label>
+      <input type="text" id="phone">
+
+      <label>Bio:</label>
+      <textarea id="bio" rows="4"></textarea>
+
+      <label>Profile Image URL:</label>
+      <input type="text" id="profile_image" placeholder="e.g. assets/img/me.jpg">
+
+      <div class="buttons">
+        <button type="submit">💾 Save Changes</button>
+        <button type="button" id="btnReset">↺ Reset</button>
+      </div>
+    </form>
+
+    <div id="msgBox" style="margin-top:10px;"></div>
+  </section>
+
+  <script type="module" src="js/profile_admin.js"></script>
+</body>
+</html>

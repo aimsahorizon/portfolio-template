@@ -1,43 +1,80 @@
-const API_URL = "/api/profile_api.php";
+// ✅ Adjust this URL based on your setup
+// If your API folder is directly under project root:
+const API_PROFILE = "http://localhost/portfolio/api/profile_api.php";
 
-// 🔹 Get all profiles
+/* ============================
+   🔹 GET ALL PROFILES
+   ============================ */
 export async function getProfiles() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  return data.data;
+  try {
+    const res = await fetch(API_PROFILE);
+    const data = await res.json();
+    return data.profiles || [];
+  } catch (err) {
+    console.error("Error fetching profiles:", err);
+    return [];
+  }
 }
 
-// 🔹 Get single profile
+/* ============================
+   🔹 GET SINGLE PROFILE
+   ============================ */
 export async function getProfile(id = 1) {
-  const res = await fetch(`${API_URL}?id=${id}`);
-  const data = await res.json();
-  return data.data;
+  try {
+    const res = await fetch(`${API_PROFILE}?id=${id}`);
+    const data = await res.json();
+    return data.profile || null;
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    return null;
+  }
 }
 
-// 🔹 Add new profile
+/* ============================
+   🔹 ADD PROFILE
+   ============================ */
 export async function addProfile(profileData) {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(profileData)
-  });
-  return await res.json();
+  try {
+    const res = await fetch(API_PROFILE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData)
+    });
+    return await res.json();
+  } catch (err) {
+    console.error("Error adding profile:", err);
+    return { status: "error", message: "Failed to add profile" };
+  }
 }
 
-// 🔹 Update profile
-export async function updateProfile(id, profileData) {
-  const res = await fetch(`${API_URL}?id=${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(profileData)
-  });
-  return await res.json();
+/* ============================
+   🔹 UPDATE PROFILE
+   ============================ */
+export async function updateProfile(profileData) {
+  try {
+    const res = await fetch(API_PROFILE, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData)
+    });
+    return await res.json();
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    return { status: "error", message: "Failed to update profile" };
+  }
 }
 
-// 🔹 Delete profile
+/* ============================
+   🔹 DELETE PROFILE
+   ============================ */
 export async function deleteProfile(id) {
-  const res = await fetch(`${API_URL}?id=${id}`, {
-    method: "DELETE"
-  });
-  return await res.json();
+  try {
+    const res = await fetch(`${API_PROFILE}?id=${id}`, {
+      method: "DELETE"
+    });
+    return await res.json();
+  } catch (err) {
+    console.error("Error deleting profile:", err);
+    return { status: "error", message: "Failed to delete profile" };
+  }
 }
