@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Skills</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <h2>Manage Skills</h2>
+
+  <form id="skillForm">
+    <input type="hidden" id="skill_id">
+    <label>Skill Name:</label>
+    <input type="text" id="skill_name" required>
+
+    <label>Proficiency Level:</label>
+    <input type="text" id="proficiency_level" required>
+
+    <label>Category:</label>
+    <input type="text" id="category" value="Technical">
+
+    <button type="submit">💾 Save Skill</button>
+  </form>
+
+  <h3>Existing Skills</h3>
+  <table id="skillsTable" border="1">
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Level</th><th>Category</th><th>Actions</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module" src="js/skills_admin.js"></script>
+</body>
+</html>

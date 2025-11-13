@@ -26,8 +26,16 @@
   </section>
 
   <!-- ===== SKILLS, PROJECTS, ETC. WILL GO HERE LATER ===== -->
-  <section id="skills-section" class="section"></section>
-  <section id="projects-section" class="section"></section>
+  <section id="skills-section" class="section">
+    <h2>My Skills</h2>
+    <ul id="skills-list"></ul>
+  </section>
+
+  <section id="projects-section" class="section">
+    <h2>Projects</h2>
+    <div id="projects-container"></div>
+  </section>
+
 
   <!-- ===== FOOTER ===== -->
   <footer>

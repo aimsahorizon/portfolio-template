@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Projects</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <h2>Manage Projects</h2>
+
+  <form id="projectForm">
+    <input type="hidden" id="project_id">
+    <label>Title:</label>
+    <input type="text" id="title" required>
+
+    <label>Description:</label>
+    <textarea id="description" required></textarea>
+
+    <label>Link:</label>
+    <input type="url" id="link">
+
+    <label>Tech Stack:</label>
+    <input type="text" id="tech_stack">
+
+    <label>Project Date:</label>
+    <input type="date" id="project_date">
+
+    <button type="submit">💾 Save Project</button>
+  </form>
+
+  <h3>Existing Projects</h3>
+  <table id="projectsTable" border="1">
+    <thead>
+      <tr><th>ID</th><th>Title</th><th>Tech Stack</th><th>Date</th><th>Actions</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module" src="js/projects_admin.js"></script>
+</body>
+</html>
