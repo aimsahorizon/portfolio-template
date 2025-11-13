@@ -1,4 +1,5 @@
-const API_PROJECTS = "/api/projects_api.php";
+// const API_PROJECTS = "/api/projects_api.php";
+const API_PROJECTS = "http://localhost/myportfolio/api/projects_api.php";
 
 export async function getProjects() {
   const res = await fetch(API_PROJECTS);

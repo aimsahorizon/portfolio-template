@@ -1,7 +1,7 @@
 import { getProfile } from "../js/api/profile.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const profile = await getProfile(1); // Assume single profile with ID 1
+  const profile = await getProfile(1);
   if (profile) renderProfile(profile);
 });
 

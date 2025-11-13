@@ -1,6 +1,4 @@
-// ✅ Adjust this URL based on your setup
-// If your API folder is directly under project root:
-const API_PROFILE = "http://localhost/portfolio/api/profile_api.php";
+const API_PROFILE = "http://localhost/myportfolio/api/profile_api.php";
 
 /* ============================
    🔹 GET ALL PROFILES

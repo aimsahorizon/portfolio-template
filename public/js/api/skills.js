@@ -1,4 +1,5 @@
-const API_SKILLS = "/api/skills_api.php";
+// const API_SKILLS = "/api/skills_api.php";
+const API_SKILLS = "http://localhost/myportfolio/api/skills_api.php";
 
 export async function getSkills() {
   const res = await fetch(API_SKILLS);

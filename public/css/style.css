@@ -1,0 +1,14 @@
+/* Minimal custom styles - Tailwind provides most styling */
+:root {
+	--brand-black: #000;
+	--muted: #6b7280;
+}
+
+html, body { height: 100%; }
+
+/* ensure images don't overflow */
+img { max-width: 100%; height: auto; }
+
+/* small utility for subtle borders used in admin */
+.thin-border { border: 1px solid #e5e7eb; }
+
