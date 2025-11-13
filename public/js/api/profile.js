@@ -32,20 +32,11 @@ export async function getProfile(id = 1) {
 }
 
 /* ============================
-   🔹 ADD PROFILE
+   🔹 ADD PROFILE (DISABLED)
    ============================ */
 export async function addProfile(profileData) {
-  try {
-    const res = await fetch(API_PROFILE, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(profileData)
-    });
-    return await res.json();
-  } catch (err) {
-    console.error("Error adding profile:", err);
-    return { status: "error", message: "Failed to add profile" };
-  }
+  console.warn('addProfile is disabled in single-profile mode');
+  return { status: 'error', message: 'Add profile not allowed' };
 }
 
 /* ============================
@@ -66,16 +57,9 @@ export async function updateProfile(profileData) {
 }
 
 /* ============================
-   🔹 DELETE PROFILE
+   🔹 DELETE PROFILE (DISABLED)
    ============================ */
 export async function deleteProfile(id) {
-  try {
-    const res = await fetch(`${API_PROFILE}?id=${id}`, {
-      method: "DELETE"
-    });
-    return await res.json();
-  } catch (err) {
-    console.error("Error deleting profile:", err);
-    return { status: "error", message: "Failed to delete profile" };
-  }
+  console.warn('deleteProfile is disabled in single-profile mode');
+  return { status: 'error', message: 'Delete profile not allowed' };
 }

@@ -7,62 +7,45 @@ class Profile {
         $this->conn = $db;
     }
 
-    // 🟢 Get all profiles (in case of multiple users)
-    public function getAllProfiles() {
-        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
+    // Get the single profile row (treat the table as a single-profile store)
+    public function getProfile() {
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT 1";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // 🟢 Get single profile (you can use id=1 if single user)
-    public function getProfileById($id) {
-        $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // 🟢 Add new profile
-    public function addProfile($data) {
-        $query = "INSERT INTO " . $this->table . " (full_name, title, bio, email, phone, profile_image)
-                  VALUES (:full_name, :title, :bio, :email, :phone, :profile_image)";
-        $stmt = $this->conn->prepare($query);
+    // Update the single profile. If $data contains an 'id' it will be used,
+    // otherwise the most recent row's id will be used.
+    public function updateProfile($data) {
+        // Determine target id
+        $id = isset($data['id']) ? $data['id'] : null;
+        if (!$id) {
+            $current = $this->getProfile();
+            if (!$current || !isset($current['id'])) return false;
+            $id = $current['id'];
+        }
 
-        $stmt->bindParam(":full_name", $data['full_name']);
-        $stmt->bindParam(":title", $data['title']);
-        $stmt->bindParam(":bio", $data['bio']);
-        $stmt->bindParam(":email", $data['email']);
-        $stmt->bindParam(":phone", $data['phone']);
-        $stmt->bindParam(":profile_image", $data['profile_image']);
-
-        return $stmt->execute();
-    }
-
-    // 🟢 Update existing profile
-    public function updateProfile($id, $data) {
         $query = "UPDATE " . $this->table . "
                   SET full_name=:full_name, title=:title, bio=:bio, email=:email, phone=:phone, profile_image=:profile_image
                   WHERE id=:id";
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":full_name", $data['full_name']);
-        $stmt->bindParam(":title", $data['title']);
-        $stmt->bindParam(":bio", $data['bio']);
-        $stmt->bindParam(":email", $data['email']);
-        $stmt->bindParam(":phone", $data['phone']);
-        $stmt->bindParam(":profile_image", $data['profile_image']);
+        $full_name = isset($data['full_name']) ? $data['full_name'] : null;
+        $title = isset($data['title']) ? $data['title'] : null;
+        $bio = isset($data['bio']) ? $data['bio'] : null;
+        $email = isset($data['email']) ? $data['email'] : null;
+        $phone = isset($data['phone']) ? $data['phone'] : null;
+        $profile_image = isset($data['profile_image']) ? $data['profile_image'] : null;
 
-        return $stmt->execute();
-    }
-
-    // 🟢 Delete profile
-    public function deleteProfile($id) {
-        $query = "DELETE FROM " . $this->table . " WHERE id=:id";
-        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":full_name", $full_name);
+        $stmt->bindParam(":title", $title);
+        $stmt->bindParam(":bio", $bio);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":phone", $phone);
+        $stmt->bindParam(":profile_image", $profile_image);
+
         return $stmt->execute();
     }
 }

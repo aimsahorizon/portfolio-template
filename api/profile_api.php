@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Methods: GET, PUT");
 header("Access-Control-Allow-Headers: Content-Type");
 
 include 'database.php';
@@ -15,48 +15,31 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        if(isset($_GET['id'])) {
-            $data = $profile->getProfileById($_GET['id']);
-        } else {
-            $data = $profile->getAllProfiles();
-        }
+        // Always return the single profile row
+        $data = $profile->getProfile();
         echo json_encode(["status" => "success", "data" => $data]);
         break;
 
-    case 'POST':
-        $input = json_decode(file_get_contents("php://input"), true);
-        if ($profile->addProfile($input)) {
-            echo json_encode(["status" => "success", "message" => "Profile added"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Failed to add profile"]);
-        }
-        break;
-
     case 'PUT':
-        if(!isset($_GET['id'])) {
-            echo json_encode(["status" => "error", "message" => "ID required"]);
+        // Accept update payload in request body. If it includes 'id' it will be used,
+        // otherwise the stored single row will be updated.
+        $input = json_decode(file_get_contents("php://input"), true);
+        if (!$input || !is_array($input)) {
+            echo json_encode(["status" => "error", "message" => "Invalid input"]);
             break;
         }
-        $id = $_GET['id'];
-        $input = json_decode(file_get_contents("php://input"), true);
-        if ($profile->updateProfile($id, $input)) {
+
+        if ($profile->updateProfile($input)) {
             echo json_encode(["status" => "success", "message" => "Profile updated"]);
         } else {
             echo json_encode(["status" => "error", "message" => "Update failed"]);
         }
         break;
 
+    // Disallow POST/DELETE for profiles in single-profile setup
+    case 'POST':
     case 'DELETE':
-        if(!isset($_GET['id'])) {
-            echo json_encode(["status" => "error", "message" => "ID required"]);
-            break;
-        }
-        $id = $_GET['id'];
-        if ($profile->deleteProfile($id)) {
-            echo json_encode(["status" => "success", "message" => "Profile deleted"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Delete failed"]);
-        }
+        echo json_encode(["status" => "error", "message" => "Operation not allowed"]);
         break;
 
     default:
