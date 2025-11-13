@@ -7,19 +7,49 @@ class Skill {
     $this->conn = $db;
   }
 
+  // Get all skills with rank based on proficiency using subquery
   public function getAllSkills() {
-    $query = "SELECT * FROM {$this->table} ORDER BY category, skill_name";
+    $query = "SELECT s.*, 
+                     (SELECT COUNT(*) FROM " . $this->table . " WHERE category = s.category) as skills_in_category
+              FROM {$this->table} s 
+              ORDER BY s.category, s.skill_name";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  // Get skill by ID with category rank
   public function getSkillById($id) {
-    $query = "SELECT * FROM {$this->table} WHERE id = :id";
+    $query = "SELECT s.*, 
+                     (SELECT COUNT(*) FROM " . $this->table . " WHERE category = s.category) as skills_in_category
+              FROM {$this->table} s 
+              WHERE s.id = :id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  // Get skills by category using subquery
+  public function getSkillsByCategory($category) {
+    $query = "SELECT * FROM {$this->table} 
+              WHERE category = (SELECT DISTINCT category FROM {$this->table} WHERE category = :category)
+              ORDER BY skill_name";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':category', $category);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  // Get top skills (can be extended with complex filtering)
+  public function getTopSkills($limit = 5) {
+    $query = "SELECT * FROM {$this->table} 
+              WHERE id IN (SELECT id FROM {$this->table} ORDER BY skill_name LIMIT :limit)
+              ORDER BY skill_name";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function addSkill($name, $level, $category) {
