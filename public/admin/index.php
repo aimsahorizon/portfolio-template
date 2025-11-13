@@ -12,7 +12,12 @@
       @apply px-4 py-2 rounded font-medium text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 transition cursor-pointer;
     }
     .tab-btn.active {
-      @apply bg-black text-white border-black hover:bg-gray-900;
+      background-color: #000 !important;
+      color: #fff !important;
+      border-color: #000 !important;
+    }
+    .tab-btn.active:hover {
+      background-color: #1a1a1a !important;
     }
   </style>
 </head>
@@ -28,9 +33,9 @@
     <main class="max-w-6xl mx-auto px-6 py-10">
       <!-- Tab Navigation -->
       <div class="flex gap-3 mb-8 border-b border-gray-200 pb-4">
-        <button class="tab-btn active" data-tab="profile">Edit Profile</button>
-        <button class="tab-btn" data-tab="skills">Manage Skills</button>
-        <button class="tab-btn" data-tab="projects">Manage Projects</button>
+        <button class="tab-btn active px-6 py-3 rounded font-semibold text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer" data-tab="profile">Edit Profile</button>
+        <button class="tab-btn px-6 py-3 rounded font-semibold text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer" data-tab="skills">Manage Skills</button>
+        <button class="tab-btn px-6 py-3 rounded font-semibold text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer" data-tab="projects">Manage Projects</button>
       </div>
 
       <!-- ====== PROFILE TAB ====== -->

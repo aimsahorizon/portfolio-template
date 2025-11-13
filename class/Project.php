@@ -12,8 +12,6 @@ class Project {
     $query = "SELECT p.*,
                      DATEDIFF(CURDATE(), p.project_date) as days_since_project
               FROM {$this->table} p
-              WHERE p.project_date = (SELECT MAX(project_date) FROM {$this->table} WHERE project_date <= CURDATE())
-              OR p.project_date > CURDATE()
               ORDER BY p.project_date DESC";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
