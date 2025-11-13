@@ -42,11 +42,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("projects-container");
   if (container && projects.length > 0) {
     container.innerHTML = projects.map(p => `
-      <div class="project-card">
-        <h3>${p.title}</h3>
-        <p>${p.description}</p>
-        <small>${p.tech_stack}</small><br>
-        <a href="${p.link}" target="_blank">View Project</a>
+      <div class="project-card bg-white border border-gray-200 rounded-lg shadow-sm p-6 hover:shadow-md transition">
+        <h3 class="text-xl font-bold mb-2">${p.title}</h3>
+        <p class="text-gray-700 mb-3 text-sm">${p.description}</p>
+        <div class="mb-4">
+          <small class="text-gray-600 text-xs uppercase font-semibold">Tech Stack:</small>
+          <p class="text-gray-800 font-medium">${p.tech_stack}</p>
+        </div>
+        ${p.link ? `<a href="${p.link}" target="_blank" class="inline-block px-4 py-2 bg-black text-white rounded hover:bg-gray-900 transition font-medium text-sm">→ View Project</a>` : ''}
       </div>
     `).join("");
   }

@@ -12,3 +12,20 @@ img { max-width: 100%; height: auto; }
 /* small utility for subtle borders used in admin */
 .thin-border { border: 1px solid #e5e7eb; }
 
+/* Project card styling */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-card h3 {
+  color: #000;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
