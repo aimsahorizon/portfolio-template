@@ -13,10 +13,12 @@
     <header class="bg-black text-white">
       <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
         <h1 class="text-xl font-semibold tracking-tight">My Portfolio</h1>
-        <nav class="space-x-4 text-sm opacity-80">
+        <nav class="space-x-4 text-sm opacity-80 flex items-center gap-6">
           <a href="#profile-section" class="hover:underline">Profile</a>
           <a href="#skills-section" class="hover:underline">Skills</a>
           <a href="#projects-section" class="hover:underline">Projects</a>
+          <span class="opacity-30">|</span>
+          <a href="admin/" class="hover:underline">Admin</a>
         </nav>
       </div>
     </header>
@@ -56,12 +58,6 @@
       <div class="max-w-5xl mx-auto px-6 py-6 text-sm text-gray-600">© 2025 My Portfolio. All rights reserved.</div>
     </footer>
   </div>
-
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <p>© 2025 My Portfolio. All rights reserved.</p>
-  </footer>
 
   <!-- JS -->
   <script type="module" src="js/main.js"></script>
