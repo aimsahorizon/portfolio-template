@@ -8,8 +8,12 @@
   <style>
     .tab-content { display: none; }
     .tab-content.active { display: block; }
-    .tab-btn.active { @apply bg-black text-white; }
-    .tab-btn { @apply px-4 py-2 border border-gray-200 rounded hover:bg-gray-50; }
+    .tab-btn {
+      @apply px-4 py-2 rounded font-medium text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 transition cursor-pointer;
+    }
+    .tab-btn.active {
+      @apply bg-black text-white border-black hover:bg-gray-900;
+    }
   </style>
 </head>
 <body>
