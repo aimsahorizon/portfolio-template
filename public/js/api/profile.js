@@ -7,7 +7,8 @@ export async function getProfiles() {
   try {
     const res = await fetch(API_PROFILE);
     const data = await res.json();
-    return data.profiles || [];
+    // backend returns { status: ..., data: [...] }
+    return data.data || [];
   } catch (err) {
     console.error("Error fetching profiles:", err);
     return [];
@@ -21,7 +22,9 @@ export async function getProfile(id = 1) {
   try {
     const res = await fetch(`${API_PROFILE}?id=${id}`);
     const data = await res.json();
-    return data.profile || null;
+    // backend returns { status: ..., data: { ... } }
+    console.debug("getProfile response:", data);
+    return data.data || null;
   } catch (err) {
     console.error("Error fetching profile:", err);
     return null;

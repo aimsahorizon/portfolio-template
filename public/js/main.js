@@ -4,15 +4,28 @@ import { getProjects } from "./api/projects.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   // --- PROFILE ---
-  const profile = await getProfile(1);
-  if (profile) {
-    document.getElementById("profile-image").src = profile.profile_image;
-    document.getElementById("profile-name").textContent = profile.full_name;
-    document.getElementById("profile-title").textContent = profile.title;
-    document.getElementById("profile-bio").textContent = profile.bio;
-    document.getElementById("profile-email").textContent = profile.email;
-    document.getElementById("profile-phone").textContent = profile.phone;
-    document.getElementById("nav-name").textContent = profile.full_name;
+  try {
+    const profile = await getProfile(1);
+    console.debug("profile loaded:", profile);
+    if (profile) {
+      const imgEl = document.getElementById("profile-image");
+      const nameEl = document.getElementById("profile-name");
+      const titleEl = document.getElementById("profile-title");
+      const bioEl = document.getElementById("profile-bio");
+      const emailEl = document.getElementById("profile-email");
+      const phoneEl = document.getElementById("profile-phone");
+      const navNameEl = document.getElementById("nav-name");
+
+      if (imgEl && profile.profile_image) imgEl.src = profile.profile_image;
+      if (nameEl && profile.full_name) nameEl.textContent = profile.full_name;
+      if (titleEl && profile.title) titleEl.textContent = profile.title;
+      if (bioEl && profile.bio) bioEl.textContent = profile.bio;
+      if (emailEl && profile.email) emailEl.textContent = profile.email;
+      if (phoneEl && profile.phone) phoneEl.textContent = profile.phone;
+      if (navNameEl && profile.full_name) navNameEl.textContent = profile.full_name;
+    }
+  } catch (err) {
+    console.error("Error populating profile UI:", err);
   }
 
   // --- SKILLS ---
